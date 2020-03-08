@@ -1,1 +1,9 @@
+.App{
+    text-align:center;
+}
 
+.Inner{
+    display:inline-block;
+    background-color:lightcoral;
+    width: 50%;
+}

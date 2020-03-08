@@ -1,4 +1,4 @@
-# Project Title
+# Music Practice
 
 An app for music practice.  Planned features include interval practice, metronome, tuning assistance.
 
