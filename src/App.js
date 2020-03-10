@@ -23,13 +23,13 @@ function Choices(props){
   return(
     <div class="noteDiv">
         <span>{props.title} </span>
-        <select value={props.current1}class="note">
+        <select value={props.current1}>
               {props.choices1.map((value)=>{
                 return <option value={value}>{value}</option>
               })}
         </select>
 
-        <select value={props.current2}class="note">
+        <select value={props.current2}>
               {props.choices2.map((value)=>{
                 return <option value={value}>{value}</option>
               })}
@@ -39,69 +39,39 @@ function Choices(props){
 }
 
 function Intervals(props){
-  const [note, setNote] = useState("C4");
-  const [interval, setInterval] = useState("m4"); 
+  const [note, setNote] = useState("C");
+  const [octave, setOctave] = useState("4")
+  const [interval, setInterval] = useState("Perfect"); 
+  const [intervalSize, setIntervalSize] = useState(5);
   //TONEJS Intervals are set in Hz, so should convert from major, minor, augmented, diminished
 //https://www.liveabout.com/table-of-intervals-2455915
-//TODO: implement logic to filter out invalid combinations (music theory)
-//2, 3, 6, 7 have major, minor, augmented, diminished
-//4, 5, 8 have diminished, augmented, diminished
-//perhaps make sub-components?
-
+//TODO Give state to components
+  const noteSelection= ["C","D","E","F","G","A", "B"];
+  const octaveSelection = [1, 2, 3, 4, 5, 6, 7];
+  const intervalSelection = ["Major", "Minor", "Perfect", "Augmented", "Diminished"];
+  let intervalWidths = [];
+  switch(interval){
+    case "Major":
+      intervalWidths = [2,3,6,7];
+      break;
+    case "Minor":
+      intervalWidths = [2,3,6,7];
+      break;      
+    case "Perfect":
+      intervalWidths = [4,5,8];
+      break;
+    case "Augmented":
+      intervalWidths = [2, 3, 4, 5, 6, 7, 8];
+      break;
+    case "Diminished":
+      intervalWidths = [2, 3, 4, 5, 6, 7, 8];
+      break;
+  }
   return (
       <div class="interval">
       <h1>Interval Selection</h1>
-        <div class="noteDiv">
-        <span>Note & Octave: </span>
-        <select value="C" class="note">
-              <option value="C">C</option>
-              <option value="D">
-                D
-              </option>
-              <option value="E">
-                E
-              </option>
-              <option value="F">F</option>
-              <option value="G">G</option>
-              <option value="A">A</option>
-              <option value="B">B</option>
-            </select>
-
-          <select value="4" class="note">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-            </select>
-        </div>
-        <div class="intervalDiv">
-        <span>Interval Type and Length: </span>
-
-            <select class="type">
-              <option value="Major/Perfect">Major/Perfect</option>
-              <option value="Minor">
-                Minor
-              </option>
-              <option value="Augmented">
-                Augmented
-              </option>
-              <option value="Diminished">Diminished</option>
-
-            </select>
-          <select value="4" class="size">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-            </select>
-        </div>
+        <Choices title="Note & Octave" current1={note} current2={octave} choices1={noteSelection} choices2={octaveSelection}/>
+        <Choices title="Interval Type and Length:" current1={interval} interval2={intervalSize} choices1={intervalSelection} choices2={intervalWidths}/>
         <button> Play</button>
 
       </div>
