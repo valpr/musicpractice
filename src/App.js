@@ -52,6 +52,7 @@ function Intervals(props){
   const [octave, setOctave] = useInput("4")
   const [interval, setInterval] = useInput("Perfect"); 
   const [intervalSize, setIntervalSize] = useInput(5);
+  let synth = new Tone.Synth().toMaster();
 
   //TONEJS Intervals are set in Hz, so should convert from major, minor, augmented, diminished
 //https://www.liveabout.com/table-of-intervals-2455915
@@ -64,8 +65,8 @@ function Intervals(props){
       minor2:"blah",
     }
     let notes = [note+octave, note+octave];// Add frequency/cents adjustment
-    let synth = new Tone.Synth().toMaster();
-    synth.triggerAttackRelease(note, 0.2);
+    synth.triggerAttackRelease(note+octave, 0.5);
+    setTimeout(() =>{synth.triggerAttackRelease(note+octave, 0.5)},1000)
     
 
 
