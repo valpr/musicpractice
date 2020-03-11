@@ -20,16 +20,17 @@ class App extends React.Component {
 }
 
 function Choices(props){
+
   return(
     <div class="noteDiv">
         <span>{props.title} </span>
-        <select value={props.current1}>
+        <select onChange={props.onChange1} value={props.current1}>
               {props.choices1.map((value)=>{
                 return <option value={value}>{value}</option>
               })}
         </select>
 
-        <select value={props.current2}>
+        <select onChange={props.onChange2} value={props.current2}>
               {props.choices2.map((value)=>{
                 return <option value={value}>{value}</option>
               })}
@@ -38,14 +39,23 @@ function Choices(props){
   )
 }
 
+function useInput(initialValue){
+  const [value, setValue] = useState(initialValue);
+  function handleChange(e){
+    setValue(e.target.value);
+  }
+  return [value, handleChange];
+}
+
 function Intervals(props){
-  const [note, setNote] = useState("C");
-  const [octave, setOctave] = useState("4")
-  const [interval, setInterval] = useState("Perfect"); 
-  const [intervalSize, setIntervalSize] = useState(5);
+  const [note, setNote] = useInput("C");
+  const [octave, setOctave] = useInput("4")
+  const [interval, setInterval] = useInput("Perfect"); 
+  const [intervalSize, setIntervalSize] = useInput(5);
   //TONEJS Intervals are set in Hz, so should convert from major, minor, augmented, diminished
 //https://www.liveabout.com/table-of-intervals-2455915
-//TODO Give state to components
+
+
   const noteSelection= ["C","D","E","F","G","A", "B"];
   const octaveSelection = [1, 2, 3, 4, 5, 6, 7];
   const intervalSelection = ["Major", "Minor", "Perfect", "Augmented", "Diminished"];
@@ -70,8 +80,8 @@ function Intervals(props){
   return (
       <div class="interval">
       <h1>Interval Selection</h1>
-        <Choices title="Note & Octave" current1={note} current2={octave} choices1={noteSelection} choices2={octaveSelection}/>
-        <Choices title="Interval Type and Length:" current1={interval} interval2={intervalSize} choices1={intervalSelection} choices2={intervalWidths}/>
+        <Choices onChange1={setNote} onChange2={setOctave} title="Note & Octave" current1={note} current2={octave} choices1={noteSelection} choices2={octaveSelection}/>
+        <Choices onChange1={setInterval} onChange2={setIntervalSize} title="Interval Type and Length:" current1={interval} interval2={intervalSize} choices1={intervalSelection} choices2={intervalWidths}/>
         <button> Play</button>
 
       </div>
