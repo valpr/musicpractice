@@ -54,19 +54,50 @@ function Intervals(props){
   const [intervalSize, setIntervalSize] = useInput(5);
   let synth = new Tone.Synth().toMaster();
 
-  //TONEJS Intervals are set in Hz, so should convert from major, minor, augmented, diminished
-//https://www.liveabout.com/table-of-intervals-2455915
-//https://www.guitarland.com/MusicTheoryWithToneJS/PlayIntervals.html
 
-//select keeps index when options change.
-  function handleClick(){ //TODO tone frequencies and playing the notes
-  
-    let frequencyLibrary= {
-      minor2:"blah",
+  function handleClick(){ 
+    let modifier = 0;
+    let modifiedInterval = interval;
+    let modifiedIntervalSize= parseInt(intervalSize);
+    const semitoneLibrary= {
+      Minor2:1,
+      Major2:2,
+      Minor3:3,
+      Major3:4,
+      Perfect4:5,
+      Perfect5:7,
+      Minor6:8,
+      Major6:9,
+      Minor7:10,
+      Major7:11,
+      Perfect8:12,
     }
-    let notes = [note+octave, note+octave];// Add frequency/cents adjustment
+    if(interval ==="Augmented"){
+      modifier = 1;
+      if(modifiedIntervalSize === 4 || modifiedIntervalSize===5 || modifiedIntervalSize === 8){
+        modifiedInterval= "Perfect";
+      }  else{
+        modifiedInterval = "Major"
+      }
+    }else if(interval ==="Diminished"){
+      modifier = -1;
+      if(modifiedIntervalSize === 4 || modifiedIntervalSize===5 || modifiedIntervalSize === 8){
+        modifiedInterval= "Perfect";
+      }  else{
+        modifiedInterval = "Minor"
+      }
+    }
+
+
+    let semitoneSteps = semitoneLibrary[modifiedInterval+modifiedIntervalSize]+modifier;
+    console.log(semitoneSteps);
+    let secondNote = Tone.Frequency(note+octave).transpose(semitoneSteps);
+    
+
+
+    //play notes
     synth.triggerAttackRelease(note+octave, 0.5);
-    setTimeout(() =>{synth.triggerAttackRelease(note+octave, 0.5)},1000)
+    setTimeout(() =>{synth.triggerAttackRelease(secondNote, 0.5)},1000)
     
 
 
@@ -90,6 +121,8 @@ function Intervals(props){
       break;
     case "Diminished":
       intervalWidths = [2, 3, 4, 5, 6, 7];
+      break;
+    default:
       break;
   }
   return (
@@ -152,7 +185,7 @@ class Metronome extends React.Component {
   
   render(){
     const synth = new Tone.MembraneSynth().toMaster();
-    const loop = new Tone.Loop(function(time){
+    new Tone.Loop(function(time){
       synth.triggerAttackRelease("C2","4n");
     },"4n").start(0);
     let bpm = this.state.bpm;
