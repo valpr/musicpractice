@@ -12,12 +12,22 @@ class App extends React.Component {
           <div className="Metronome">
             <Metronome/>
             <Intervals/>
+            <Microphone/>
           </div>
         </div>
       </div>
     );
   }
 }
+
+function Microphone(props){
+  return(
+    <div>"hello world"
+    <button>Allow Recording</button>
+    </div>
+  )
+}
+
 
 function Choices(props){
 
