@@ -95,7 +95,7 @@ function Intervals(props){
   const [octave, setOctave] = useInput("4")
   const [interval, setInterval] = useInput("Perfect"); 
   const [intervalSize, setIntervalSize] = useInput(5);
-  let synth = new Tone.Synth().toMaster();
+  let synth2 = new Tone.Synth().toMaster();
 
 
   function handleClick(){ 
@@ -139,8 +139,8 @@ function Intervals(props){
 
 
     //play notes
-    synth.triggerAttackRelease(note+octave, 0.5);
-    setTimeout(() =>{synth.triggerAttackRelease(secondNote, 0.5)},1000)
+    synth2.triggerAttackRelease(note+octave, 0.5);
+    setTimeout(() =>{synth2.triggerAttackRelease(secondNote, 0.5)},1000)
     
 
 

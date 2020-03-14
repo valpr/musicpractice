@@ -1,6 +1,6 @@
 # Music Practice
 
-An app for music practice.  Planned features include interval practice, metronome, tuning assistance.
+An app for music practice.  Features include listening to intervals, an accurate metronome, and a tuning assistant that records and returns the note and octave.
 
 ## Getting Started
 
@@ -8,74 +8,51 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
-
-```
-Give examples
-```
+Install NodeJS
 
 ### Installing
 
 A step by step series of examples that tell you how to get a development env running
 
-Say what the step will be
+Clone the repository
 
 ```
-Give the example
+$ git clone https://github.com/valpr/musicpractice.git
 ```
 
-And repeat
+Make sure packages are up to date
 
 ```
-until finished
+npm install
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
+start project
 
 ```
-Give an example
+npm start
 ```
 
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
+Website should launch on http://localhost:3000/
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
+```
+npm run build
+npm install -g serve
+serve -s build
+```
 
 ## Built With
 
-
-
-## Contributing
-
-
-## Versioning
-
-
+Built in React with ToneJS, Web Audio API, and Pitchfinder
 
 ## Authors
 
 * **Andrew F** - *Initial work* - [valpr](https://github.com/valpr/)
 
-See also the list of [contributors](https://github.com/valpr/musicpractice/contributors) who participated in this project.
-
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the Mozilla Public License - see the [LICENSE.md](LICENSE.md) file for details
 
 
 
