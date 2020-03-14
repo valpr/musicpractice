@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './App.css';
 import Tone from 'tone'
+import Pitchfinder from 'pitchfinder'
 
 
 class App extends React.Component {
@@ -21,9 +22,41 @@ class App extends React.Component {
 }
 
 function Microphone(props){
+  const [pitch, setPitch] = useState('');
+
+  const allowMic = () =>{
+    var motu = new Tone.UserMedia();
+
+    motu.open("mic").then(function(stream){
+      console.log('Accepted Mic');
+      console.log(stream);
+
+      const source = stream._mediaStream;
+      const processor = stream._context.createScriptProcessor(4096,1,1);
+      source.connect(processor);
+
+      processor.onaudioprocess = function(e){
+        const detectPitch = Pitchfinder.DynamicWavelet();
+        const myAudioBuffer = e.inputBuffer // assume this returns a WebAudio AudioBuffer object
+        const float32Array = myAudioBuffer.getChannelData(0); // get a single channel of sound
+        const detectedPitch = detectPitch(float32Array); // null if pitch cannot be identified
+        //console.log(detectedPitch);
+        if (detectedPitch>200){
+          setPitch(Tone.Frequency(detectedPitch).toNote());
+          //console.log(Tone.Frequency(detectedPitch).toNote());
+        }
+      }
+
+    });
+  }
+
+
+
   return(
-    <div>"hello world"
-    <button>Allow Recording</button>
+    <div>
+    <button onClick={allowMic}>Allow Recording</button>
+    <p>Current pitch: {pitch}</p>
+    
     </div>
   )
 }
