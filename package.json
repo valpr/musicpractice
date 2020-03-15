@@ -9,6 +9,7 @@
     "node-sass": "^4.13.1",
     "pitchfinder": "^2.2.1",
     "react": "^16.13.0",
+    "react-bootstrap": "^1.0.0-beta.17",
     "react-dom": "^16.13.0",
     "react-scripts": "3.4.0",
     "tone": "^13.8.25"

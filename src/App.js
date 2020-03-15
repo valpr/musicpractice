@@ -8,8 +8,14 @@ class App extends React.Component {
   render(){
 
     return (
-      <div className="App">
-        <div className="Inner">
+      <div className="Background">
+        <div id="container" > 
+          <h1 id="Title">Music Practice & Ear Training</h1>
+
+        </div>
+
+        <div className="App">
+
           <div className="Metronome">
             <Metronome/>
             <Intervals/>
@@ -54,7 +60,10 @@ function Microphone(props){
 
   return(
     <div>
+      <h2>Tuning</h2>
+
     <button onClick={allowMic}>Allow Recording</button>
+    
     <p>Current pitch: {pitch}</p>
     
     </div>
@@ -170,8 +179,12 @@ function Intervals(props){
   }
   return (
       <div className="interval">
-      <h1>Interval Selection</h1>
+      <h2>Interval Selection</h2>
+       <h3>Choose Starting Pitch</h3>
+
         <Choices  onChange1={setNote} onChange2={setOctave} title="Note & Octave" current1={note} current2={octave} choices1={noteSelection} choices2={octaveSelection}/>
+        <h3>Specify Interval</h3>
+
         <Choices  onChange1={setInterval} onChange2={setIntervalSize} title="Interval Type and Length:" current1={interval} current2={intervalSize} choices1={intervalSelection} choices2={intervalWidths}/>
         <button onClick={handleClick}> Play</button>
 
@@ -234,10 +247,12 @@ class Metronome extends React.Component {
     let bpm = this.state.bpm;
     return(
         <div className="Metronome">
+          <h2>Metronome</h2>
+
           <div className="bpm-slider">
             <div>{bpm} BPM</div>
             <input type = "range" min = "60" 
-            max = "240" value = {bpm} 
+            max = "240" step="1" value = {bpm} 
             onChange={this.handleBpmChange}/>
           </div>
           <button onClick={this.startStop}> {this.state.playing ? 'Stop' : 'Start'}</button>
